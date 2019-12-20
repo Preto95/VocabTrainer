@@ -1,0 +1,5 @@
+data/org.gnome.Vocabtrainer.desktop.in
+data/org.gnome.Vocabtrainer.appdata.xml.in
+data/org.gnome.Vocabtrainer.gschema.xml
+src/window.uisrc/main.vala
+src/window.vala

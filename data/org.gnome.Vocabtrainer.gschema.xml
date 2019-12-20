@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="vocabtrainer">
+	<schema id="org.gnome.Vocabtrainer" path="/org/gnome/Vocabtrainer/">
+	</schema>
+</schemalist>
