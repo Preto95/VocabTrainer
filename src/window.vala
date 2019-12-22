@@ -20,9 +20,38 @@ namespace Vocabtrainer {
 	[GtkTemplate (ui = "/org/gnome/Vocabtrainer/window.ui")]
 	public class Window : Gtk.ApplicationWindow {
 		[GtkChild]
+		Gtk.Label lbl_vocab;
+		[GtkChild]
+		Gtk.Entry entry_translation;
+		[GtkChild]
+        Gtk.Button btn_check;
 
 		public Window (Gtk.Application app) {
 			Object (application: app);
+
+
+
+            FileHandler fh = new FileHandler();
+            int counter = 0;
+
+            try {
+                Vocabulary.lst_vocabs = fh.read_file();
+
+            } catch (Error e) {
+                lbl_vocab.label = e.message;
+            }
+
+            if(lbl_vocab.label == "")
+			    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+
+			btn_check.clicked.connect(() => {
+			     if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
+			         counter++;
+			        lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+			        entry_translation.text = "";
+			    }
+			});
 		}
+
 	}
 }

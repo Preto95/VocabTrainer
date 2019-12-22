@@ -1,6 +1,8 @@
 vocabtrainer_sources = [
   'main.vala',
   'window.vala',
+  'vocabulary.vala',
+  'filehandler.vala'
 ]
 
 vocabtrainer_deps = [
