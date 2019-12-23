@@ -29,8 +29,6 @@ namespace Vocabtrainer {
 		public Window (Gtk.Application app) {
 			Object (application: app);
 
-
-
             FileHandler fh = new FileHandler();
             int counter = 0;
 
