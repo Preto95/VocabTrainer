@@ -69,6 +69,7 @@ namespace Vocabtrainer {
                     } finally {
                         entry_translation.text = "";
                     }
+
 			    }
 
 			    else {
