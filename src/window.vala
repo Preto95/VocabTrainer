@@ -28,6 +28,7 @@ namespace Vocabtrainer {
 
 		public Window (Gtk.Application app) {
 			Object (application: app);
+			btn_check.set_can_focus(false);
 
             FileHandler fh = new FileHandler();
             int counter = 0;
@@ -57,30 +58,39 @@ namespace Vocabtrainer {
 			    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
 
 			btn_check.clicked.connect(() => {
-			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
-			        counter++;
-			        lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+			    if(counter != Vocabulary.lst_vocabs.length() - 1) {
+			        if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
+			            counter++;
+			            lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+			            lbl_vocab.label += " " + counter.to_string() + "/" + Vocabulary.lst_vocabs.length().to_string();
 
-			        try {
-                        p.load_from_data(right, right.length);
-                        lbl_vocab.get_style_context().add_provider(p, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                    } catch(Error e) {
-                        lbl_vocab.label = e.message.to_string();
-                    } finally {
-                        entry_translation.text = "";
-                    }
+			            try {
+                            p.load_from_data(right, right.length);
+                            lbl_vocab.get_style_context().add_provider(p, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                        } catch(Error e) {
+                            lbl_vocab.label = e.message.to_string();
+                        } finally {
+                            entry_translation.text = "";
+                        }
 
+			        }
+
+			        else {
+                        try {
+                            p.load_from_data(wrong, wrong.length);
+                            lbl_vocab.get_style_context().add_provider(p, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                        } catch(Error e) {
+                            lbl_vocab.label = e.message.to_string();
+                        } finally {
+                            entry_translation.text = "";
+                        }
+			        }
 			    }
 
 			    else {
-                    try {
-                        p.load_from_data(wrong, wrong.length);
-                        lbl_vocab.get_style_context().add_provider(p, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                    } catch(Error e) {
-                        lbl_vocab.label = e.message.to_string();
-                    } finally {
-                        entry_translation.text = "";
-                    }
+			        counter = 0;
+			        lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+			        entry_translation.text = "";
 			    }
 			});
 		}
