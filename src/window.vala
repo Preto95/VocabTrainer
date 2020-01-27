@@ -26,7 +26,7 @@ namespace Vocabtrainer {
 		[GtkChild]
     Gtk.Button btn_check;
 
-		int counter = 0;
+		int counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length() - 1);
 		Gtk.CssProvider p;
 		string wrong;
 		string right;
@@ -73,11 +73,10 @@ namespace Vocabtrainer {
 		}
 
 		private void check_translation() {
-			if(counter != Vocabulary.lst_vocabs.length() - 1) {
+			//if(counter != Vocabulary.lst_vocabs.length() - 1) {
 			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
-					counter++;
+					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length() - 1);
 					lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
-					lbl_vocab.label += " " + counter.to_string() + "/" + Vocabulary.lst_vocabs.length().to_string();
 
 					try {
 						p.load_from_data(right, right.length);
@@ -100,13 +99,13 @@ namespace Vocabtrainer {
 					    entry_translation.text = "";
 				    }
 				}
-			}
+			//}
 
-			else {
-				counter = 0;
-				lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
-				entry_translation.text = "";
-			}
+			// else {
+			// 	counter = 0;
+			// 	lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+			// 	entry_translation.text = "";
+			// }
 		}
 	}
 }
