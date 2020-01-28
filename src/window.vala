@@ -24,9 +24,9 @@ namespace Vocabtrainer {
 		[GtkChild]
 		Gtk.Entry entry_translation;
 		[GtkChild]
-    Gtk.Button btn_check;
+        Gtk.Button btn_check;
 
-		int counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length() - 1);
+		int counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
 		Gtk.CssProvider p;
 		string wrong;
 		string right;
@@ -75,7 +75,7 @@ namespace Vocabtrainer {
 		private void check_translation() {
 			//if(counter != Vocabulary.lst_vocabs.length() - 1) {
 			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
-					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length() - 1);
+					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
 					lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
 
 					try {
