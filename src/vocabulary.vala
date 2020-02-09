@@ -32,12 +32,21 @@ namespace Vocabtrainer {
         /**
          * Checks if the given translation is correct
          */
-        public bool check(string to_check) {
-            if (to_check == Translation)
-                return true;
+        public bool check(string to_check, bool invert) {
+            if(invert == true) {
+                if (to_check == Origin)
+                    return true;
 
-            else
-                return false;
+                else
+                    return false;
+            }
+            else {
+                if (to_check == Translation)
+                    return true;
+
+                else
+                    return false;
+            }
         }
 
         /**
