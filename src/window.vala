@@ -28,22 +28,24 @@ namespace Vocabtrainer {
         [GtkChild]
         Gtk.Switch sw_transMode;
 
-		int counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
+		int counter;
 		Gtk.CssProvider p;
 		string wrong;
 		string right;
-		bool invert;
+		int last_counter;
 
 		public Window (Gtk.Application app) {
 			Object (application: app);
 			btn_check.set_can_focus(false);
+
+			counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
+			last_counter = counter;
 
 			FileHandler fh = new FileHandler();
 
 			wrong = "* { color: #ff0000 }";
 		    right = "* { color: #00cc00 }";
 		    p = new Gtk.CssProvider();
-		    invert = false;
 
             try {
                 p.load_from_data(right, right.length);
@@ -94,6 +96,7 @@ namespace Vocabtrainer {
          */
 		private void check_translation() {
 			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text, sw_transMode.state) == true) {
+
 					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
 
 					if(sw_transMode.state == false)
