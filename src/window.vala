@@ -67,13 +67,11 @@ namespace Vocabtrainer {
             if(key.keyval == 65293)
                 check_translation();
 
-            //lbl_vocab.label = key.keyval.to_string();
             return false;
           });
 		}
 
 		private void check_translation() {
-			//if(counter != Vocabulary.lst_vocabs.length() - 1) {
 			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
 					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
 					lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
@@ -99,13 +97,6 @@ namespace Vocabtrainer {
 					    entry_translation.text = "";
 				    }
 				}
-			//}
-
-			// else {
-			// 	counter = 0;
-			// 	lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
-			// 	entry_translation.text = "";
-			// }
 		}
 	}
 }
