@@ -25,11 +25,14 @@ namespace Vocabtrainer {
 		Gtk.Entry entry_translation;
 		[GtkChild]
         Gtk.Button btn_check;
+        [GtkChild]
+        Gtk.Switch sw_transMode;
 
 		int counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
 		Gtk.CssProvider p;
 		string wrong;
 		string right;
+		bool invert;
 
 		public Window (Gtk.Application app) {
 			Object (application: app);
@@ -40,6 +43,7 @@ namespace Vocabtrainer {
 			wrong = "* { color: #ff0000 }";
 		    right = "* { color: #00cc00 }";
 		    p = new Gtk.CssProvider();
+		    invert = false;
 
             try {
                 p.load_from_data(right, right.length);
@@ -61,20 +65,42 @@ namespace Vocabtrainer {
             if(lbl_vocab.label == "")
 			    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
 
-					btn_check.clicked.connect(check_translation);
+			/**
+			 * Events
+			 */
+			btn_check.clicked.connect(check_translation);
 
-          entry_translation.key_press_event.connect((key) => {
-            if(key.keyval == 65293)
-                check_translation();
+            entry_translation.key_press_event.connect((key) => {
+                if(key.keyval == 65293)
+                    check_translation();
 
-            return false;
-          });
+                return false;
+            });
+
+            sw_transMode.state_set.connect((state) => {
+                if(state == true) {
+                    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Translation;
+                }
+                else {
+                    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+                }
+
+                return false;
+            });
 		}
 
+        /**
+         * To translate and actualize the display
+         */
 		private void check_translation() {
-			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text) == true) {
+			    if(Vocabulary.lst_vocabs.nth_data(counter).check(entry_translation.text, sw_transMode.state) == true) {
 					counter = Random.int_range(0, (int)Vocabulary.lst_vocabs.length());
-					lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+
+					if(sw_transMode.state == false)
+					    lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Origin;
+
+				    else
+				        lbl_vocab.label = Vocabulary.lst_vocabs.nth_data(counter).Translation;
 
 					try {
 						p.load_from_data(right, right.length);
